@@ -1,0 +1,142 @@
+<!-- 
+一、class与style绑定
+	1.class绑定
+	class绑定的数据可以是对象和数组
+	语法：
+	1）对象语法：v-bind:class = '{"类名1":布尔值,"类名2":布尔值...}'
+	2）数组语法：v-bind:class = '["类名1","类名2"...]'
+	class绑定数据也可以是三目运算符
+	注意：v-bind:class指令可以与普通的class属性共存
+
+	2.style绑定
+	style属性绑定的数据即为内联样式，同样具有对象和数组两种形式
+	1）对象语法：v-bind:style = "{样式1:值1,样式2:值2...}"
+	2）数组语法：v-bind:style = "[样式对象1,样式对象2...]"
+
+二、模板渲染
+	当获取到后端的数据后，我们会把它按照一定的规则加载到写好的模板中，输出成在浏览器中显示的HTML，这个过程就是渲染。
+	Vue.js提供了v-if,v-show,v-else,v-for这几个指令来说明模板和数据间的逻辑关系，这基本就构成了模板引擎的主要部分。
+	1.条件渲染
+		1）v-if,v-else,v-else-if
+		v-if,v-else,v-else-if的作用是根据数据值来判断是否输出该DOM元素，以及包含的子元素。
+		注意：v-else必须紧跟v-if或v-else-if,v-else-if必须紧跟v-if或v-else-if后，不然该指令不起作用。
+		2）v-show
+		除了v-if，v-show也是可以根据条件展示元素的一个指令，v-show只是切换元素的css属性display。
+		3）v-if与v-show的区别
+		当v-if和v-show的条件发生变化时，v-if引起的是dom操作级别的变化，而v-show仅发生了样式的变化。如果在初始条件为false时，v-if本身什么都不会做，而v-show则仍会进行正常的操作，把 css样式设置为display:none.
+	2.列表渲染
+		1.v-for指令主要用于列表渲染，根据接收到的数组重复渲染v-for绑定到的DOM元素及其内部的子元素
+		基本语法：v-for = "item in items"
+		2.v-for还支持一个可选的第二个参数为当前项的索引
+		语法：v-for = "(item,index) in items"
+		3.可以通过v-for对一个对象进行遍历
+		语法：v-for = "value in object"
+		v-for也可以提供第二个参数为键名，第三个参数为索引
+		语法：v-for = "(value,key,index) in object"
+		4.v-for还可以用整数进行遍历
+		5.可以用of替代in作为分隔符
+
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src = "vue.js"></script>
+	<style>
+		.p1{
+			width:200px;
+			height: 200px;
+			border:1px solid red;
+		}
+		.red{
+			color:red;
+		}
+		.blue{
+			border:2px solid blue;
+		}
+		.p2{
+			width:200px;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<p v-bind:class = '{"p1":flag}'>123</p>
+		<p v-bind:class = '["red","blue"]'>222</p>
+		<p v-bind:class = 'isRed?"red":"blue"' class = "p2">qqq</p>
+		<p v-bind:style = "{color:blue,backgroundColor:orange}">对象方式设置样式</p>
+		<p v-bind:style = "[border,font]">数组方式设置样式</p>
+	</div>
+	<script>
+		var vm = new Vue({
+			el:'#app',
+			data:{
+				flag:true,
+				isRed:false,
+				blue:"blue",
+				orange:"orange",
+				border:{
+					border:"2px solid green",
+					color:"orange"
+				},
+				font:{
+					fontSize : "20px"
+				}
+			}
+		})
+	</script>
+	<div id="app1">
+		<p v-if = "show == 1">111</p>
+		<p v-else-if = "show == 2">222</p>
+		<p v-else-if = "show == 3">333</p>
+		<p>aaa</p>
+		<p v-else-if = "show == 4">444</p>
+		<p v-else-if = "show == 5">555</p>
+		<p v-else = "show == 6">666</p>
+
+		<p v-show = "isShow">show</p>
+	</div>
+	<script>
+		var vm1 = new Vue({
+			el:"#app1",
+			data:{
+				show:"5",
+				isShow:false
+			}
+		})
+	</script>
+
+	<div id="app2">
+		<ul>
+			<li v-for = "item in items">{{item}}</li>
+		</ul>
+		<ul>
+			<li v-for = "(item,index) in items">{{index}}--{{item}}</li>
+		</ul>
+		<ul>
+			<li v-for = "value in myObject">{{value}}</li>
+		</ul>
+		<ul>
+			<li v-for = "(value,key,index) of myObject">{{index}}-{{key}}-{{value}}</li>
+		</ul>
+		<ul>
+			<li v-for = "n of 5">{{n}}</li>
+		</ul>
+	</div>
+	<script>
+		var vm2 = new Vue({
+			el:"#app2",
+			data:{
+				items:["a","b","c","d"],
+				myObject:{
+					name:"张三",
+					age:20,
+					sex:"男"
+				}
+			}
+		})
+	</script>
+</body>
+</html>

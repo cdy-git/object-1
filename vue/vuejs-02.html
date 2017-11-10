@@ -1,0 +1,112 @@
+<!-- 
+生命周期
+	Vue.js实例在创建时有一系列的初始化步骤，例如：建立数据观察，编译模板，创建数据绑定等。在此过程中，我们可以通过一些定义好的生命周期钩子函数（hook function）来运行业务逻辑。钩子函数就是系统事件所触发的回调函数。
+	生命周期钩子有：
+	-beforeCreate:在实例开始初始化时同步调用。此时的数据观察、事件等都尚未初始化。
+	-created:在实例创建后调用。此时已完成数据绑定、事件方法，但尚未开始DOM编译，也就是未挂载到文档中。
+	-beforeMount:挂载到文档中前调用。
+	-mounted:在编译结束时调用。此时所有指令都已生效，数据变化时可以触发DOM更新。
+	-beforeUpdate:在实例挂载后，再次更新实例时会调用该方法，此时尚未更新DOM。
+	-updated:在实例挂载后，再次更新实例并更新完DOM结构后调用。
+	-beforeDestroy:在开始销毁实例时调用，此时的实例仍然有效。
+	-destroyed:在实例销毁后调用，此时所有的绑定和实例指令都已经解绑，子实例也会被销毁。
+
+数据绑定
+	Vue.js的核心是一个响应式的数据绑定系统，建立绑定后，DOM将和数据保持同步，这样就无需手动维护DOM，使代码能够更加简洁易懂，提升效率。
+	一、数据绑定语法
+	1.文本插值
+	数据绑定的最基础形式就是用双大括号“{{}}”进行文本插值
+	在input输入框中我们可以使用v-model指令来实现双向数据绑定，{{}}中的值会与数据对象中的值保持一致。无论何时，绑定的数据对象上的值发生改变，插值处的内容也会更新。
+	通过v-once指令，可以执行一次性地插值，此时，绑定的数据对象上的值发生改变，插值处的内容不会更新。
+	注意：使用v-once时，会影响到该节点上所有的数据
+	2.html
+	使用v-html指令用于输出html代码
+	3.绑定表达式
+	Vue.js提供了完全的JavaScript表达式的支持
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src = "vue.js"></script>
+	<style>
+		.p1{
+			background-color: orange;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<p>{{message}}</p>
+		<input type="text" v-model = "message">
+	</div>
+	<script>
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				message:"大禹学院"
+			},
+			beforeCreate:function(){
+				console.log("beforeCreate");
+				console.log(this.$data);  //vm实例中data属性
+				console.log(this.$el);	//el属性
+			},
+			created:function(){
+				console.log("created");
+				console.log(this.$data.message);
+				console.log(this.$el);
+			},
+			beforeMount:function(){
+				console.log("beforeMount");
+				console.log(this.$data.message);
+				console.log(this.$el);
+			},
+			mounted:function(){
+				console.log("mounted");
+				console.log(this.$data.message);
+				console.log(this.$el);
+				this.$destroy(); //销毁实例
+			},
+			beforeUpdate:function(){
+				alert("beforeUpdate");
+				console.log(this.$data.message);
+				console.log(this.$el);
+			},
+			updated:function(){
+				console.log("updated");
+			},
+			beforeDestroy:function(){
+				console.log("beforeDestroy");
+			},
+			destroyed:function(){
+				console.log("destroyed");
+			}
+		})
+	</script>
+	<div id="app1">
+		{{msg}}
+		<p v-once>{{msg}}</p>
+		<input type="text" v-model = "msg">
+		<div v-html = "html"></div>
+		{{5 + 5}} <br>
+		{{msg+ "aaaaaa"}} <br>
+		{{ ok?"yes":"no" }} <br>
+		<!-- {{ var a = 0 }} 这里会报错，因为var a = 0不是表达式 -->
+		<!-- {{ if(2>1) {console.log("123")} }}  这里也不是表达式-->
+		<p v-bind:class = "'p'+ classNum">aaaa</p>
+	</div>
+	<script>
+		var vm1 = new Vue({
+			el:"#app1",
+			data:{
+				msg:"这是一段文本",
+				html:"<p style='color:red'>这是html,<b>HTML</b></p>",
+				ok:true,
+				classNum:1
+			}
+		})
+	</script>
+</body>
+</html>

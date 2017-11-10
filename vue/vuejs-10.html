@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src = "vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<root-component></root-component>
+	</div>
+	<script>
+		var title = {
+			template:"<h3>这是标题</h3>"
+		}
+		var time = {
+			template:"<div>{{ new Date() }}</div>"
+		}
+		var desc = {
+			template:"<div>这是一段描述信息<my-time></my-time></div>",
+			components:{
+				myTime:time
+			}
+		}
+		Vue.component("root-component",{
+			template:"<div><my-title></my-title><my-desc></my-desc></div>",
+			components:{
+				myTitle:title,
+				myDesc:desc
+			}
+		});
+		var vm = new Vue({
+			el:"#app"
+		})
+	</script>
+	<div id="app1">
+		<my-name></my-name>
+		<my-age></my-age>
+	</div>
+	<script>
+		var yes = {
+			template:'<input type="button" value = "确定"/>'
+		}
+		var no = {
+			template:'<input type="button" value = "取消" />'
+		}
+		Vue.component("my-name",{
+			template:"<div><span>我的名字：{{ name }}</span><confirm-button></confirm-button><cancel-button></cancel-button></div>",
+			data:function(){
+				return {name:"张三"}
+			},
+			components:{
+				confirmButton:yes,
+				cancelButton:no
+			}
+		});
+		Vue.component("my-age",{
+			template:"<div><span>我的年龄：{{ age }}</span><confirm-button></confirm-button><cancel-button></cancel-button></div>",
+			data:function(){
+				return {age:20}
+			},
+			components:{
+				confirmButton:yes,
+				cancelButton:no
+			}
+		});
+		var vm1 = new Vue({
+			el:"#app1"
+		})
+	</script>
+</body>
+</html>

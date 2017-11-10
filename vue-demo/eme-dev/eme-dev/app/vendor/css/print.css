@@ -1,0 +1,8 @@
+body {
+  margin: 0;
+  -webkit-print-color-adjust: exact;
+}
+.page-break {
+  display: block;
+  page-break-before: always;
+}

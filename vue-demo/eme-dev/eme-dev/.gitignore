@@ -1,0 +1,7 @@
+node_modules
+*.log
+.DS_Store
+/app/dist
+/dist
+stats.html
+stats.json

@@ -1,0 +1,20 @@
+.editor {
+  &.focus-mode {
+    * {
+      color: #ccc !important;
+    }
+  }
+  .cm-s-base16-light {
+    .CodeMirror-activeline-background {
+      background-color: transparent;
+    }
+    .CodeMirror-activeline {
+      * {
+        color: #333 !important;
+      }
+    }
+  }
+  .CodeMirror-dialog input {
+    font-family: inherit !important;
+  }
+}

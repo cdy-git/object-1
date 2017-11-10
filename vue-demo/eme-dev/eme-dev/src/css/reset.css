@@ -1,0 +1,60 @@
+.CodeMirror {
+  font-family: inherit !important;
+}
+
+.markdown-body {
+  word-break: break-word;
+  font-family: inherit;
+
+  *::-webkit-scrollbar {
+    background-color: transparent;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #f0f0f0;
+    border-radius: 2px;
+    border: 1px solid #e2e2e2;
+  }
+
+  kbd {
+    line-height: 1em;
+    font-size: .85em;
+  }
+}
+
+.markdown-body ul{
+  padding-left: 20px;
+}
+
+.markdown-body {
+  .task-list {
+    padding-left: 0;
+    .task-list-item {
+      input {
+        margin: 0;
+      }
+    }
+  }
+}
+
+input, textarea {
+  &:focus {
+    outline: none;
+  }
+}
+
+/* modified gridly */
+.row { display: flex; }
+.col { flex: 1; }
+@media (max-width: 600px) {
+  .row { flex-direction: column; }
+  .col { flex: 0 0 auto; }
+}
+@media (min-width: 600px) {
+  .col-tenth { flex: 0 0 10%; }
+  .col-fifth { flex: 0 0 20%; }
+  .col-quarter { flex: 0 0 25%; }
+  .col-third { flex: 0 0 33.3333334%; }
+  .col-half { flex: 0 0 50%; }
+}

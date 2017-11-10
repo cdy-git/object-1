@@ -1,0 +1,76 @@
+<!-- 
+一、过滤器
+	1.介绍
+	过滤器主要用于文本的转换，过滤器可以用在两个地方：{{}}插值和v-bind中。过滤器应该被添加在javascript表达式的尾部，由管道符“｜”指示，过滤器的函数总是接受表达式的值作为第一个参数，过滤器可以串联
+	语法：{{ message | filter(参数1,参数2...) }}
+	这里的参数1将给过滤器作为第二个参数，参数2将给过滤器作为第三个参数
+	注意：Vue.js2.0开始去除了内置的过滤器
+	2.自定义过滤器
+	使用vm实例中的filters属性进行自定义过滤器
+
+二、组件
+	组件化开发是Vue.js中非常重要的一个特性，我们可以将一个页面看成是一个大的根组件，里面包含的元素就是不同的子组件，子组件也可以在不同的根组件里被调用。在一个页面中通常会声明一个Vue实例new Vue({})作为根组件，Vue.js提供了Vue.extend(option)方法，创建基础Vue构造器的子类，参数option对象和直接声明Vue实例参数对象基本一致，不同的是，el和data选项需要通过函数返回值赋值，避免多个组件共用一个数据
+	Vue.extend()的简写形式
+	var child = Vue.extend({option}) 可以写成：var child = {option}
+	组件化可以扩展HTML元素，封装可重用的代码。在较高层面上，组件是自定义元素，Vue.js的编译器为它添加特殊功能。
+三、注册组件
+	1.全局注册
+		使用Vue.component("组件名",选项)注册一个全局组件，组件注册后，可以在父实例的模块中以自定义元素的形式使用。
+		对于组件的命名，W3C规范是字母小写并包含一个短横杠“-”，Vue.js暂不强制要求。
+		注意：要确保在初始化根实例之前注册了组件
+	2.局部注册
+		通过使用组件实例选项注册，可以使组件仅在另一个实例/组件的作用域中可用
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src = "vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<p>{{ message | uppercase("$") }}</p>
+	</div>
+	<script>
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				message:"abcd"
+			},
+			filters:{
+				uppercase:function(value,symbol){
+					return symbol + value.toUpperCase();
+				}
+			}
+		})
+	</script>
+
+	<div id="app1">
+		<my-tag></my-tag>
+		<my-tag2></my-tag2>
+		<my-child></my-child> <!-- 这里是一个局部注册的组件，不可以在全局使用 -->
+	</div>
+	<script>
+		Vue.component("my-tag",{  //全局注册
+			template:"<p>这是一段文字{{ msg }}</p>",
+			data:function(){
+				return {msg:"abc"}
+			}
+		})
+		var child = Vue.extend({
+			template:"<span>子类</span>"
+		})
+		Vue.component("my-tag2",{
+			template:"<div>这是一个DIV<my-child></my-child></div>",
+			components:{
+				"myChild":child
+			}
+		});
+		var vm1 = new Vue({
+			el:"#app1"
+		})
+	</script>
+</body>
+</html>

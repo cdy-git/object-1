@@ -1,0 +1,90 @@
+<!-- 
+一、Vuejs是什么
+Vue.js被定义成一个用来开发Web前端界面的一个前端库，是个轻量级的工具。
+Vue.js本身具有响应式编程和组件化的特点。所谓响应式编程，即为保持状态和视图的同步。
+Vue.js的组件化理念是“一切皆是组件”，可以将任意封装好的代码注册成标签。
+二、为什么要用Vue.js
+Vue.js使用的是MVVM(Model-View-ViewModel)开发模式
+MVVM模式主要分成三个部分：
+Model:它是与应用程序的业务逻辑和相关数据的封装载体，Model并不关心会被如何显示和操作，所以模型中不会包含任何的界面显示和相关的逻辑。在Web页面中，大部分Model都是来自地Ajax服务端返回的数据或全局的配置信息，这些数据或配置可以被多个组件复用。
+View:它专注于界面的显示和渲染。
+ViewModel:它是Model和View的粘合体，负责Model和View的交互和协作。它负责View提供显示的数据，以及提供View中事件操作Model的途径
+在Vue.js中，每一个实例都是一个ViewModel的角色。
+
+三、Vue实例与选项
+实例化：在面向对象的编程中，通常把用类创建对象的过程称为实例化。
+创建Vue实例：
+语法：var 变量名 = new Vue({});
+选项：包含数据、模板、挂载元素、方法、生命周期钩子等。
+1.模板
+	1）el:类型是一个字符串、DOM元素或是函数。其作用是为实例提供挂载元素，一般来说我们会使用CSS选择器，或是DOM元素。例如：el:“#app”。
+	2）template：类型是字符串，它默认会将template值替换挂载的元素，也就是el值对应的元素。
+2.数据
+	在Vue.js中，通过data属性定义数据，这些数据可以在实例对应的模板中进行绑定和使用。注意：如果传入data的是一个对象，那个Vue实例会代理data对象里所有的属性。另外，我们也可以引用Vue实例中$data来获取声明的数据。
+	组件类型的实例可以通过props获取数据，同data一样，也需要在初始化时预设好。
+	在组件类型实例中，也可以同时使用data，但是要注意两点：
+	1）data的值必须是一个函数，并且返回值是一个原始对象。
+	2）data中的属性名不能和props中的有重名。
+3.方法
+	我们可以通过选项属性methods对象来定义方法，并且使用v-on指令来监听DOM事件
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src = "vue.js"></script>
+</head>
+<body>
+	<!-- <div id = "app">
+		<p>这是一段文字</p>
+	</div> -->
+	<script>
+		// var data1 = {a:1};
+		// var vm = new Vue({
+		// 	el:"#app",
+		// 	//template:"<span>这是模板</span>"
+		// 	data:data1
+		// 	// data:{
+		// 	// 	a:1
+		// 	// }
+		// })
+		// console.log(data1 === vm.$data);
+
+	</script>
+	<div id="app1">
+		<my-tag title = "标题"></my-tag>
+	</div>
+	<script>
+		Vue.component("my-tag",{
+			props:["title"],
+			template:"<p>{{title}}</p>"
+		})
+		 new Vue({
+			el:"#app1"
+		})
+	</script>
+	<!-- <div id="app2">
+		<my-tag2 a = "这是A" b= "这是B"></my-tag2>
+		<input type="button" value="按钮" v-on:click = "alertInfo">
+	</div> -->
+	<script>
+		// Vue.component("my-tag2",{
+		// 	props:["a","b"],
+		// 	data:function(){
+		// 		return {c:"这是C"}
+		// 	},
+		// 	template:"<div>{{a}}--{{b}}--{{c}}</div>"
+		// })
+		// var vm2 = new Vue({
+		// 	el:"#app2",
+		// 	methods:{
+		// 		alertInfo:function(){
+		// 			alert("按钮被点击");
+		// 		}
+		// 	}
+		// })
+	</script>
+</body>
+</html>
